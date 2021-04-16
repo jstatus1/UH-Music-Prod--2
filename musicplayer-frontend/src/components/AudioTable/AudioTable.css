@@ -1,0 +1,36 @@
+.AudioTable_Audio_Image
+{
+    height: 40px;
+    width: 40px;
+    
+}
+
+.AudioTable_Table
+{
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.AudioTable_Row:hover
+{
+    cursor: pointer;
+    background: rgba(71, 66, 65, 0.363);
+}
+
+.AudioTable_Audio_Artwork
+{
+    position: relative;
+}
+
+.AudioTable_Playbutton
+{
+    color: rgba(226, 35, 35, 0.863);
+    text-align: center;
+    top:-.15em;
+    left: .10em;
+    position: absolute;
+    z-index: 100;
+    font-size: 35px;
+}
+
+

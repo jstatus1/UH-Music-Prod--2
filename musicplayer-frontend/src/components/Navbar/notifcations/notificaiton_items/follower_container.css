@@ -1,0 +1,21 @@
+.follow_back_button
+{
+    outline-style: solid;
+    outline-color: rgb(248, 238, 238);
+    padding: 1px;
+    font-size: 11px;
+    outline-width: thin;
+    white-space: nowrap;
+    
+}
+
+.information_text
+{
+    line-height: 0px;
+    font-size: 12px;
+}
+
+.date_text
+{
+    font-size: 10px;
+}

@@ -1,0 +1,13 @@
+.song-block-not-clicked {
+    display: flex;
+    border: 1px solid #bbb;
+    background-color: rgb(255, 255, 255);
+    padding: 0.5em;
+}
+
+.song-block-clicked {
+    display: flex;
+    border: 1px solid rgb(43, 117, 244);
+    background-color: rgb(89, 173, 247);
+    padding: 0.5em;
+}

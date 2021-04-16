@@ -1,0 +1,42 @@
+.notification_dropdown
+{
+   width: 450px;
+   
+}
+
+.notification_body
+{
+  height:200px;
+  overflow-y:auto;
+}
+
+.header_setting
+{
+    font-size: 12px;
+    color: #585353;
+    text-decoration: none; 
+}
+
+.header_setting:hover {
+    font-size: 12px; 
+    text-decoration: none;  
+    color: #585353;
+ }
+
+
+
+.avatar_image
+{
+    width:65px;
+    border-radius: 50%;
+}
+
+.follow_back_button
+{
+    font-size: 12px;
+}
+
+.view_all_notification_text
+{
+    text-align: center;
+}

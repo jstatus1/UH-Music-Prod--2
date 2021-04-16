@@ -1,0 +1,49 @@
+.playlistPadding
+{
+padding-top: 20px !important;
+}
+
+.playlistButton
+{
+padding-top: 50px !important;
+}
+
+.button-spacing {
+    padding: 20px;
+}
+
+.button-spacing-2 {
+    padding: 7px;
+}
+
+.db-list-box 
+{
+    display: flex;
+    flex: auto;
+    height: 60%;
+    overflow: scroll;
+    flex-direction: column;
+    border: 1px solid rgb(41, 41, 41);
+}
+
+.playlist-box 
+{
+    display: flex;
+    flex: auto;
+    height: 60%;
+    overflow: scroll;
+    flex-direction: column;
+    border: 1px solid rgb(41, 41, 41); 
+}
+
+.song-block-wrapper 
+{
+    padding: 0.5em;
+    
+}
+
+.save-button 
+{
+    padding-top: 20px;
+    padding-left: 70px;
+}

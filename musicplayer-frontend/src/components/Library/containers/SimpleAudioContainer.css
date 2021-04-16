@@ -1,0 +1,65 @@
+.badge_items
+{
+    padding-right: 20px;
+    width: 16.666%;
+}
+
+.audio_description
+{
+  
+    width: 100%;
+    z-index: 1;
+}
+
+.audio_artwork
+{
+    min-width: 150px;
+    height: 150px;
+    line-height: 150px;
+    margin-right: 5em;
+    position: relative;
+}
+
+.audio_image
+{
+    width: 100%;
+    height: 100%;
+    object-fit:cover;
+}
+
+.song_heading
+{
+    font-size: 14px;
+    color: #333;
+    font-weight: 100;
+    font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+    text-overflow: ellipsis;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 14px;
+}
+
+
+
+
+.playableTile__usernameHeadingContainer
+{
+    font-size: 12px;
+    font-weight: 100;
+    color: #999;
+    font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+}
+
+.playbutton
+{
+    color: pink;
+    position: absolute;
+    text-align: center;
+    top:-.05em;
+    left: .8em;
+
+    z-index: 100;
+    font-size: 60px;
+}
+

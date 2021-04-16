@@ -1,0 +1,25 @@
+{
+  "name": "musicplayer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon ./musicplayer-backend/bin/www",
+    "client": "npm run start --prefix musicplayer-frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jstatus1/MusicPlayer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jstatus1/MusicPlayer/issues"
+  },
+  "homepage": "https://github.com/jstatus1/MusicPlayer#readme",
+  "dependencies": {
+    "concurrently": "^6.0.0"
+  }
+}

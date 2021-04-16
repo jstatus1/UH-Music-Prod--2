@@ -1,0 +1,19 @@
+
+
+.search-form 
+{
+    margin: 20px;
+    width: 96%;
+    height: 100%;
+    border: 1px solid rgb(169, 168, 168);
+}
+
+.visible
+{
+    display: visible
+}
+
+.collapse
+{
+    display: collapse
+}

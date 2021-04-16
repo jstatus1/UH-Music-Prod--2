@@ -1,0 +1,7 @@
+.logo-size {
+    position: relative;
+    background: url(coogmusic.png);
+    width: 170px;
+    left: -5px;
+    background-size: contain;
+  }

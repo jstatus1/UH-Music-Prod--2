@@ -1,0 +1,7 @@
+.AudioTable_Row_ActionButton button {
+    font-size: 10px;
+}
+
+button.AudioTable_Row_MoreButton:focus {box-shadow:none !important;}
+
+button.AudioTable_Row_MoreButton:after { content: none;}
