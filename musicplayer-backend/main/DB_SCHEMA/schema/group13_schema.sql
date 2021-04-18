@@ -154,16 +154,16 @@ CREATE TABLE notifications (
 CREATE TABLE settings(
   sid SERIAL PRIMARY KEY,
   user_id INT REFERENCES users(uid) ON DELETE CASCADE,
-  new_album_notification BOOLEAN DEFAULT false,
-  new_single_release_notification BOOLEAN DEFAULT false,
-  new_follower_notification BOOLEAN DEFAULT false,
-  new_like_notification BOOLEAN DEFAULT false,
-  new_comment_notification BOOLEAN DEFAULT false,
-  suggested_content BOOLEAN DEFAULT false,
-  new_message BOOLEAN DEFAULT false,
-  receive_messages_from_everybody BOOLEAN DEFAULT false,
-  analytics BOOLEAN DEFAULT true,
-  personal_advertisment BOOLEAN DEFAULT true
+  new_album_notification BOOLEAN NOT NULL DEFAULT true ,
+  new_single_release_notification BOOLEAN NOT NULL DEFAULT true,
+  new_follower_notification BOOLEAN NOT NULL DEFAULT true,
+  new_like_notification BOOLEAN NOT NULL DEFAULT true,
+  new_comment_notification BOOLEAN NOT NULL DEFAULT true,
+  suggested_content BOOLEAN NOT NULL DEFAULT true,
+  new_message BOOLEAN NOT NULL DEFAULT true,
+  receive_messages_from_everybody BOOLEAN NOT NULL DEFAULT true,
+  analytics BOOLEAN NOT NULL DEFAULT true,
+  personal_advertisment BOOLEAN NOT NULL DEFAULT true
 );
 
 

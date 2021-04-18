@@ -42,7 +42,6 @@ class notificationsDropdown extends React.Component
         {
             
             var obj = this.state.notificationData[key]
-            console.log(obj)
             switch(obj.notif_type)
             {
                 case "NEWALBUM":

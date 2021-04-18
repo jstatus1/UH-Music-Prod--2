@@ -1,0 +1,29 @@
+.Search_UserInfo_Profile
+{
+    margin: 20px;
+}
+
+.Search_UserInfo_Profile_Image_Container
+{
+    width: 160px;
+    height: 160px;
+    border-radius: 100%;
+}
+
+.Search_UserInfo_Profile_Image
+{
+ 
+    width: 160px;
+     height: 160px;
+    border-radius: 50%;
+    background-size: cover;
+    background-image: linear-gradient(
+        135deg
+        ,#846170,#70929c);
+
+}
+.Search_UserInfo_Profile_Info_Username
+{
+    font-family:Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+    font-size: 30px;
+}

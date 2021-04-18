@@ -51,6 +51,11 @@ AFTER INSERT ON albums
 FOR EACH ROW
 EXECUTE PROCEDURE new_album_notification()
 
+CREATE TRIGGER new_song_trigger
+AFTER INSERT ON songs
+FOR EACH ROW
+EXECUTE PROCEDURE new_music_function()
+
 -------------------------------------------------------------------------
 
 

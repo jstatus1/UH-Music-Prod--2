@@ -1,0 +1,16 @@
+.Playlist_Container
+{
+    margin-bottom: 1000px;
+    font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+}
+
+.playlist-album-art
+{
+    margin-bottom: 20px;
+    
+}
+
+.playlist-album-text
+{
+    text-decoration: none;
+}

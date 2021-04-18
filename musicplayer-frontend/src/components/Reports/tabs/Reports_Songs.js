@@ -1,10 +1,14 @@
 import { React, useState, useEffect } from 'react'
 import { Form, Row, Col, Container, Button, Table } from 'react-bootstrap'
 import axios from 'axios'
+import { connect } from 'react-redux'
+import * as actions from '../../../store/actions'
+import { useHistory } from "react-router-dom"
 import '../Reports.css'
 
-const Reports_Songs = () => {
+const Reports_Songs = ({auth}) => {
     const [title, setSongTitle] = useState('');
+    const [is_admin, setAdmin] = useState(auth.is_admin);
     const [username, setUsername] = useState(''); /* from user table */
     const [first_name, setFirstName] = useState(''); /* from user table */ 
     const [last_name, setLastName] = useState(''); /* from user table */
@@ -14,6 +18,7 @@ const Reports_Songs = () => {
     const [record_label, setRecordLabel] = useState('');
     const [songData, setSongData] = useState([]);
     const [searchIsClicked, setSearchIsClicked] = useState(false);
+    let history = useHistory();
 
     const songSearch = (event) => {
 
@@ -51,6 +56,22 @@ const Reports_Songs = () => {
             console.log(error)
         })
         console.log(queryInput);
+    }
+
+    const deleteSong = (song_info) => {
+        axios.get('/api/delete/song', {
+            params: {
+                title: song_info.title,
+                username: song_info.username, 
+                first_name: song_info.first_name, 
+                last_name: song_info.last_name, 
+                album_title: song_info.album_title, 
+                record_label: song_info.record_label 
+            }})
+            .then((res) => {
+                console.log('Song deleted!')
+                history.push('/');
+            })
     }
 
 
@@ -124,6 +145,9 @@ const Reports_Songs = () => {
                 <Table striped hover responsive bordered>
                     <thead>
                         <tr>
+                            <div  className={is_admin ? "display-on" : "display-off"}>
+                            <th>Admin</th>
+                            </div>
                             <th>Song Title</th>
                             <th>Musician Username</th>
                             <th>Musician Full Name</th>
@@ -135,7 +159,12 @@ const Reports_Songs = () => {
                     </thead>
                     <tbody>
                         {songData.map(song => {
+
                             return <tr>
+                                <td className={is_admin ? "display-on" : "display-off"}>
+                                    <Button variant="danger"
+                                            onClick={(e) => deleteSong(song)}>Delete</Button>
+                                </td>
                                 <td>{song.title}</td>
                                 <td>{song.username}</td>
                                 <td>{song.first_name} {song.last_name}</td>
@@ -156,4 +185,9 @@ const Reports_Songs = () => {
     )
 }
 
-export default Reports_Songs
+const mapStateToProps = state => ({
+    auth: state.auth_reducer
+});
+  
+
+export default connect(mapStateToProps, actions)(Reports_Songs)

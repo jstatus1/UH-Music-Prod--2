@@ -1,16 +1,12 @@
 var AWS = require('aws-sdk');
-var fs = require('fs')
 const fileUpload = require('express-fileupload');
 const { v4: uuidv4 } = require('uuid');
-const { Iot } = require('aws-sdk');
 var pool = require('../db');
-const { response } = require('express');
 
 
 /*---------------------S3--------------------------------*/
 module.exports = app => {
 
-    const socket = require('../socket')
 
     app.use(fileUpload())
     AWS.config.update({region: 'us-east-2'});
@@ -856,5 +852,72 @@ module.exports = app => {
                             }
                         })
         }
+    })
+
+    app.post('/api/create/playlist_with_audio', async(req, res) => {
+        let playlist_name = req.body.title
+        let songId = req.body.songId
+        let isPublic = req.body.isPublic
+
+        //create playlist, then add the song to the playlist
+        await pool.query(`INSERT INTO playlists(user_id, playlist_name, public_status)
+        VALUES ($1, $2, $3) ON CONFLICT DO NOTHING`, [req.user.uid, playlist_name, isPublic]).then(
+        async (CreatePlaylistData) => {
+            await pool.query(`SELECT MAX(playlist_id) AS playlist_id FROM playlists WHERE user_id=$1
+            and playlist_name=$2`, [req.user.uid, playlist_name]).then(async(pidData) => {
+                console.log(pidData.rows)
+                await pool.query(`INSERT INTO playlist_songs(playlist_id, song_id)
+                VALUES($1, $2) ON CONFLICT DO NOTHING`, [pidData.rows[0].playlist_id, songId]).then(
+                    async(psData)=>{
+                        return res.status(200).send(true)
+                    }
+                ).catch((err) => {
+                    console.log(err)
+                    return res.status(401).send(false)
+                })
+
+
+            }).catch((err) => {
+                console.log(err)
+                return res.status(401).send(false)
+            })
+
+        }).catch((err) => {
+           console.log(err)
+           return res.status(401).send({mesage: 'Server Is Down'})
+        })
+    })
+
+    app.post('/api/addAudio/playlist/', async(req, res)=> {
+        let playlist_id = req.body.playlist_id
+        let song_id = req.body.song_id
+        
+        await pool.query(`SELECT COUNT(*) FROM playlist_songs 
+                          WHERE playlist_id=$1 AND song_id=$2`, [playlist_id, song_id]).then(
+                                async(psData)=>{
+                                    if(Number(psData.rows[0].count))
+                                    {
+                                        //There is already a song here
+                                        return res.status(401).send(false)
+                                    }else{
+                                        //There is not a song here
+                                        await pool.query(`INSERT INTO playlist_songs(playlist_id, song_id)
+                                        VALUES($1, $2) ON CONFLICT DO NOTHING`, [playlist_id, song_id]).then(
+                                            async(psData)=>{
+                                                return res.status(200).send(true)
+                                            }
+                                        ).catch((err) => {
+                                            console.log(err)
+                                            return res.status(401).send(false)
+                                        })
+                                        
+                                    }
+                                }
+                            ).catch((err) => {
+                                console.log(err)
+                                return res.status(401).send(false)
+                            })
+        
+
     })
 }

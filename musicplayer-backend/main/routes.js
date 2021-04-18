@@ -258,7 +258,7 @@ router.post('/api/posts/userprofiletodb', (req, res, next) => {
     const isMusician = req.query.isMusician;
     const record_label = req.query.record_label == '' ? 'nodata': req.query.record_label;
  
-    const values = [ username, first_name, last_name, isMusician ]
+    const values = [ username, first_name, last_name ]
     console.log(values);
 
     const query = `SELECT username, musician, first_name, last_name, socialmedia_fb, record_label
@@ -266,8 +266,7 @@ router.post('/api/posts/userprofiletodb', (req, res, next) => {
     FROM users 
     WHERE ${searchFormLogic('','username', username, 1)} AND
           ${searchFormLogic('','first_name',first_name,2)} AND
-          ${searchFormLogic('','last_name',last_name,3)} AND
-    musician = $4`;
+          ${searchFormLogic('','last_name',last_name,3)}`;
 
     console.log(query);
 
@@ -347,7 +346,7 @@ router.post('/api/posts/userprofiletodb', (req, res, next) => {
                 });
   });
 
-  router.get('/api/get/reports/playlists', (req,res,next) => {
+  router.get('/api/get/reports/playlists', async (req,res,next) => {
     const playlist_name = req.query.playlist_name == '' ? 'nodata': req.query.playlist_name;
     const username = req.query.username == '' ? 'nodata': req.query.username;
     const first_name = req.query.first_name == '' ? 'nodata' : req.query.first_name;
@@ -376,6 +375,35 @@ router.post('/api/posts/userprofiletodb', (req, res, next) => {
                   res.json(q_res.rows);
                 });
   });
+
+  router.get('/api/delete/song', async (req,res,next) => {
+    const title = req.query.title;
+    const username = req.query.username; 
+    const first_name = req.query.first_name; 
+    const last_name = req.query.last_name; 
+    const album_title = req.query.album_title; 
+    const record_label = req.query.record_label;
+    
+    const values = [ title, username ]
+    console.log(values)
+
+    const query = `DELETE FROM songs WHERE title = $1 
+                  AND user_id = (SELECT uid FROM users WHERE users.username = $2)`
+
+    console.log(query)
+
+    await pool.query(query, values, (q_err, q_res)=> {
+      if(q_err) {
+        console.log(q_err);
+        res.status(401).send({ status: false });
+        
+      }
+      else {
+        
+        res.send({status: true}) 
+        }})
+                            
+  })
   
 
 module.exports = router

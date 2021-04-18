@@ -17,3 +17,19 @@
 {
     display: collapse
 }
+
+
+.display-off
+{
+    display: none
+}
+
+.display-on
+{
+    display: initial
+}
+
+.visi-off
+{
+    visibility: hidden;
+}

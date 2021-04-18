@@ -138,7 +138,7 @@ class ModalLogin extends React.Component
                                 Continue With Google
                             </a>
                             <button type="button" class="provider-apple btn" >
-                                <img className="profider-icon-apple" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.clker.com%2Fcliparts%2Fi%2Fs%2FH%2Ff%2F4%2FT%2Fapple-logo-white-hi.png&f=1&nofb=1"></img>
+                                <img class="profider-icon-apple" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.clker.com%2Fcliparts%2Fi%2Fs%2FH%2Ff%2F4%2FT%2Fapple-logo-white-hi.png&f=1&nofb=1"></img>
                                 Continue With Apple
                             </button>
                             <hr></hr>

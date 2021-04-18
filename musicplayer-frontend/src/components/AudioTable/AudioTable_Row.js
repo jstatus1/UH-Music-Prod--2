@@ -4,13 +4,21 @@ import * as actions from '../../store/actions'
 
 import './AudioTable_Row.css'
 
+import PlaylistModal from './PlaylistModal'
+
 class AudioTable_Row extends PureComponent {
 
     state={
         mouse_in: false,
         current_songPlaying: false,
-        renderPlaylists_toggle: false
+        renderPlaylists_toggle: false,
+        mouse_in_playlist:false,
+        showModalPlaylist: false
     }
+
+    
+
+   
 
     secondsToHms(d) {
 
@@ -41,15 +49,10 @@ class AudioTable_Row extends PureComponent {
         }
     }
 
-    renderPlaylistDropDown()
-    {
-
-    }
-
 
     render() {
-        return(<tr key={this.props.id} className="AudioTable_Row  align-item-center" 
-                    onClick={() => this.audioLogic()}
+        return(<React.Fragment>
+        <tr key={this.props.id} className="AudioTable_Row  align-item-center" 
                     onMouseEnter={() => this.setState({mouse_in: true})} 
                     onMouseLeave={() => this.setState({mouse_in: false})} >
                     <td><i class="bi bi-heart"></i></td>
@@ -80,36 +83,36 @@ class AudioTable_Row extends PureComponent {
                             <button className="btn AudioTable_Row_MoreButton dropdown-toggle" type="button" id="AudioTable_More_DropDown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-three-dots"></i>
                             </button>
-                            <ul class="dropdown-menu" aria-labelledby="AudioTable_More_DropDown">
-                                <li><a class="dropdown-item" href="#">Add To Queue</a></li>
+                            <ul class="dropdown-menu dropend" aria-labelledby="AudioTable_More_DropDown">
+                                {/* <li><a class="dropdown-item" href="#">Add To Queue</a></li>
                                 <li><a class="dropdown-item" href="#">Go To Song Radio</a></li>
                                 <li><hr class="dropdown-divider"/></li>
                                 <li><a class="dropdown-item" href="#">Go To Artist</a></li>
                                 <li><a class="dropdown-item" href="#">Go To Album</a></li>
                                 <li><a class="dropdown-item" href="#">Show Credits</a></li>
                                 <li><hr class="dropdown-divider"/></li>
-                                <li><a class="dropdown-item" href="#">Save to Likes</a></li>
-                                <li>
-                                    <a class="dropdown-item" onClick={() => this.setState({renderPlaylists_toggle:true})}>
-                                    Add To Playlist</a>
-                                </li>
-                                
-
-
-
-
-                                <li><a class="dropdown-item" href="#">Remove from This Playlist</a></li>
+                                <li><a class="dropdown-item" href="#">Save to Likes</a></li> */}
+                                <li> <a type="button" class="btn" data-bs-toggle="modal" data-bs-target={`#playlistModal${this.props.song.song_id}`} class="dropdown-item">Add To Playlist</a></li>
+                                {/* <li><a class="dropdown-item" href="#">Remove from This Playlist</a></li> */}
+                                {/* <li><hr class="dropdown-divider"/></li>
+                                <li><a class="dropdown-item" href="#">Delete Song</a></li> */}
                                 <li><hr class="dropdown-divider"/></li>
-                                <li><a class="dropdown-item" href="#">Delete Song</a></li>
-                                <li><hr class="dropdown-divider"/></li>
-                                <li><a class="dropdown-item" href="#">Share</a></li>
+                                {/* <li><a class="dropdown-item" href="#">Share</a></li> */}
                             </ul>
+
+                            {/* <ul class="dropdown-menu dropend" aria-labelledby="AudioTable_More_DropDown">
+                                <li><a class="dropdown-item" href="#">Add To Queue</a></li>
+                                <li><a class="dropdown-item" href="#">Go To Song Radio</a></li>
+                            </ul> */}
                         </td>:
                             
                         <td>{this.secondsToHms(this.props.song.duration)}</td>
                     }
-                    
-                </tr>)
+                    <PlaylistModal id={this.props.song.song_id} song={this.props.song} song_image={this.props.song.song_image}></PlaylistModal>
+                </tr>
+                
+                
+                </React.Fragment>)
     }
 }
 

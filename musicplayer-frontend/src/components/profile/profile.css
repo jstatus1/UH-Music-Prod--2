@@ -1,2 +1,17 @@
-.about-me-textbox { height: 200px; width: 617px }
+.about-me-textbox { height: 200px; width: 526px; border-color: rgb(197, 197, 197) }
 .button-padding { padding-top: 5px !important }
+
+.display-off
+{
+    display: none
+}
+
+.display-on
+{
+    display: initial
+}
+
+.visi-off
+{
+    visibility: hidden;
+}

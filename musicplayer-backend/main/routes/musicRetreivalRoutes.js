@@ -35,4 +35,27 @@ module.exports = app => {
             console.log(error)
         })
     })
+
+
+    app.get('/api/get/playlistById', async(req, res) =>{
+        var playlist_id = req.query.playlistId
+        console.log(playlist_id)
+        
+        await pool.query(`SELECT *
+                        FROM playlist_songs p
+                            Left JOIN songs s
+                            ON  p.song_id = s.song_id
+                            Left JOIN playlists 
+                            ON  p.playlist_id = playlists.playlist_id
+                        WHERE p.playlist_id = $1`, [playlist_id])
+                    .then((q_res) => {
+                        console.log(q_res.rows)
+                        res.send(q_res.rows)
+                    }).catch((error) => {
+                        console.log(error)
+                        res.status(401).send(false)
+                    })
+    })
+
+    
 }
