@@ -68,11 +68,7 @@ const Reports_Users = (props) => {
                                                     value={username}
                                                     onChange={(e) => setUsername(e.target.value)}></Form.Control>
                                 </Col>
-                                <Col style={{"paddingTop":"2em"}}>
-                                    <Form.Check type="checkbox" 
-                                                label="Musician?"
-                                                onChange={(e) => setMusician(!isMusician)}></Form.Check>
-                                </Col>
+                                
                                 
                             <Col md="2"/>
                         </Row>

@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import  { Redirect } from 'react-router-dom'
 
 
 import './Modal_Login.css'
@@ -67,12 +68,14 @@ class ModalLogin extends React.Component
                     axios.post('/auth/login/callback', {
                         email: self.state.email,
                         password: self.state.password
+                    }).then(()=> {
+
                     }).catch(
                         error => {
                             console.log(error)
-                            
+                            window.location.reload();
                         }
-                    )  
+                    )
 
                 }else{
                     self.setState({validPassword: false})
@@ -138,7 +141,7 @@ class ModalLogin extends React.Component
                                 Continue With Google
                             </a>
                             <button type="button" class="provider-apple btn" >
-                                <img class="profider-icon-apple" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.clker.com%2Fcliparts%2Fi%2Fs%2FH%2Ff%2F4%2FT%2Fapple-logo-white-hi.png&f=1&nofb=1"></img>
+                                <img className="profider-icon-apple" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.clker.com%2Fcliparts%2Fi%2Fs%2FH%2Ff%2F4%2FT%2Fapple-logo-white-hi.png&f=1&nofb=1"></img>
                                 Continue With Apple
                             </button>
                             <hr></hr>
@@ -198,7 +201,7 @@ class ModalLogin extends React.Component
                             }
                                        
                             
-                            <button type="button" class="btn btn-danger" onClick={e => {this.signInLogic()}}>Sign In</button>
+                            <button type="button" class="btn btn-danger" onClick={() => {this.signInLogic()}}>Sign In</button>
                             
                         </div> 
                     </div>

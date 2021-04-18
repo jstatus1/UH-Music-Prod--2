@@ -1,6 +1,8 @@
 import React from 'react'
 import './song-form.css'
 
+//https://github.com/jstatus1/MusicPlayer/blob/e10d8e486fac6ed09f94455c8b1502e6dbe2bcc5/musicplayer-frontend/src/components/Upload/song-form.js
+
 export default class SongForm extends React.Component
 {
     state= {
@@ -15,14 +17,26 @@ export default class SongForm extends React.Component
         currentPage: "Basic Info",
         ISRC_toggle: false,
         p_line_toggle:false,
-        iswc_toggle:false
+        iswc_toggle:false,
+        create_album: this.props.metadata_upload.album,
+        is_valid_album_title: true,
+        audio_url: null,
+        timeFormatNormal:true,
+        songDuration:null
+    }
+
+    componentDidMount()
+    {
+        
+        this.setState({audio_url:window.URL.createObjectURL(this.props.song)})
     }
 
     imageHandler = (e) => {
+       
         this.props.song.basic_info_song.song_image = Array.from(e.target.files)
+        this.props.song.basic_info_song.song_image_name = e.target.files[0].name
         this.props.updateSongData(this.props.id, this.props.song)
     };
-
 
     renderSongUploadButton()
     {
@@ -30,7 +44,7 @@ export default class SongForm extends React.Component
         {
             return(<div className="image-button"> 
                 <button type="button">
-                <i class="bi bi-camera-fill me-2"></i>
+                    <i class="bi bi-camera-fill me-2"></i>
                     <label for={this.props.id}>
                         Upload Image
                     </label>
@@ -43,6 +57,7 @@ export default class SongForm extends React.Component
            return( <div className="image-button-x"> 
                 <button type="button" onClick={() => {
                                                     this.props.song.basic_info_song.song_image = null; 
+                                                    this.props.song.basic_info_song.song_image_name = null;
                                                     this.props.updateSongData(this.props.id, this.props.song)
                                                     var id = `${this.props.id}_art_image`
                                                     var output = document.getElementById(id);
@@ -55,6 +70,16 @@ export default class SongForm extends React.Component
             </div>)
         }
             
+    }
+
+    
+
+    audioLoad = (e) => {
+        // (e.target.duration < 3600) ? this.setState({timeFormatNormal: false}) : this.setState({timeFormatNormal: false})
+        this.setState({songDuration:Math.ceil(e.target.duration)})
+        
+        this.props.song.metadata_song.duration = Math.ceil(e.target.duration)
+        this.props.updateSongData(this.props.id, this.props.song)
     }
 
     renderSongImage()
@@ -70,12 +95,19 @@ export default class SongForm extends React.Component
                 {
                     var dataURL = reader.result;
                     var id = `${this.props.id}_art_image`
+                    
                     var output = document.getElementById(id);
-                    output.src = dataURL;
+                    if(output != null) 
+                        output.src = dataURL;
+                    
                 }
             }
+        }else{
+            var id = `${this.props.id}_art_image`
+            var output = document.getElementById(id);
+            if(output != null) 
+                output.src = null;
         }
-       
 
         return(
             <div className="image-box">
@@ -84,10 +116,12 @@ export default class SongForm extends React.Component
                         <img id={`${this.props.id}_art_image`} className="image" ></img>
                     </span>
                 </div>
-                {this.renderSongUploadButton()}  
+                {(this.props.metadata_upload.album && this.props.id == 0 || this.props.metadata_upload.album==false)?this.renderSongUploadButton():null}  
              </div>
         )
     }
+
+    
 
     renderGenreList()
     {
@@ -199,13 +233,42 @@ export default class SongForm extends React.Component
         }
     }
 
+    renderHeaderAlbumCopies()
+    {
+        return(
+            <div className="card-header">
+                    <div class="btn-group" role="group">    
+                        <button className='btn btn-dark'  onClick={e=> this.updateCurrentPage(e, "Basic Info")}>
+                            <h5>Basic Info</h5>
+                        </button>
+                    </div>
+            </div>
+        )
+    }
+
+    renderImageMainLogic()
+    {
+        if(this.props.metadata_upload.album)
+        {
+                return(<div className="col-5 ">
+                {this.renderSongImage()}
+                 </div>)
+        }else{
+            return(
+                <div className="col-5 ">
+                    {this.renderSongImage()}
+                </div>
+            )
+        }
+    }
+
 
     //Basic Form Data Entry
     renderBasicInfo(){
         return(<React.Fragment>
-                <div className="col-5 ">
-                    {this.renderSongImage()}
-                </div>
+
+                {this.renderImageMainLogic()}
+                
                             
                 <div className="col-7">
                     <div class="mb-3">
@@ -242,10 +305,10 @@ export default class SongForm extends React.Component
 
     renderMetaData()
     {
-        return(<div className="metadata_div">
+        return(<div key={this.props.id} className="metadata_div">
             <div className="row">
                 <div class="mb-3 mt-3 col-4">
-                    <label for={`contains_music+${this.props.id}`} class="form-label">Contains Music</label>
+                <label for={`contains_music+${this.props.id}`} class="form-label">Contains Music</label>
                     <select id= {`contains_music+${this.props.id}`}  class="form-select" onClick={e => {this.props.song.metadata_song.contains_music = (e.target.value=="true"); this.props.updateSongData(this.props.id, this.props.song)}}>
                         <option value="true">Yes</option>
                         <option value="false">No</option>
@@ -263,9 +326,9 @@ export default class SongForm extends React.Component
 
             <div className="row">
                 <div class="mb-3 mt-3 col-4">
-                    <label for={`ISRC+${this.props.id}`} class="form-label">ISRC <i class="bi bi-question-circle" onClick={e=>this.setState({ISRC_toggle:!(this.state.ISRC_toggle)})}></i></label>
+                     <label for={`ISRC+${this.props.id}`} class="form-label">ISRC <i class="bi bi-question-circle" onClick={e=>this.setState({ISRC_toggle:!(this.state.ISRC_toggle)})}></i></label>
                    
-                    <input type="text" id={`ISRC+${this.props.id}`} class="form-control tag-input" placeholder="e.g. USS1Z1001234"  onChange={(e) => {this.props.song.metadata_song.isrc = e.target.value; this.props.updateSongData(this.props.id, this.props.song)}} value={this.props.song.metadata_song.isrc}/>
+                     <input type="text" id={`ISRC+${this.props.id}`} class="form-control tag-input" placeholder="e.g. USS1Z1001234"  onChange={(e) => {this.props.song.metadata_song.isrc = e.target.value; this.props.updateSongData(this.props.id, this.props.song)}} value={this.props.song.metadata_song.isrc}/>
                 </div>
                 <div class="mb-3 mt-3 col-4">
                     <label for={`Composer+${this.props.id}`} class="form-label">Composer</label>
@@ -274,7 +337,7 @@ export default class SongForm extends React.Component
                 <div class="mb-3 mt-3 col-4">
                     <label for={`Release_Title+${this.props.id}`} class="form-label">Release Title</label>
                     <input type="text" id={`Release_Title+${this.props.id}`} class="form-control tag-input"  onChange={(e) => {this.props.song.metadata_song.release_title = e.target.value; this.props.updateSongData(this.props.id, this.props.song)}} value={this.props.song.metadata_song.release_title} />
-                </div>                 
+                </div>                  
             </div>  
             
                     {
@@ -292,8 +355,12 @@ export default class SongForm extends React.Component
 
             <div className="row">
                 <div class="mb-3 mt-3 col-4">
-                    <label for={`Album_Title+${this.props.id}`} class="form-label">Album Title</label>
-                    <input type="text" id={`Album_Title+${this.props.id}`} class="form-control tag-input"  onChange={(e) => {this.props.song.metadata_song.album_title = e.target.value; this.props.updateSongData(this.props.id, this.props.song)}} value={this.props.song.metadata_song.album_title}/>
+                     <label for={`Album_Title+${this.props.id}`} class="form-label">Album Title</label>
+                     <input type="text" id={`Album_Title+${this.props.id}`} class={`form-control tag-input ${(this.state.is_valid_album_title)? null: "is-invalid"}` }  
+                            onChange={(e) => {this.props.song.metadata_song.album_title = e.target.value; 
+                                             this.props.updateSongData(this.props.id, this.props.song);
+                                             this.setState({is_valid_album_title:true})}} 
+                            value={this.props.song.metadata_song.album_title}/>
                 </div>
                 <div class="mb-3 mt-3 col-4">
                     <label for={`Record_Label+${this.props.id}`} class="form-label">Record Label</label>
@@ -350,25 +417,52 @@ export default class SongForm extends React.Component
         )
     }
 
-  
+    componentDidUpdate(prevProps)
+    {
+        if(this.props.is_valid_album_title !== prevProps.is_valid_album_title && this.props.is_valid_album_title == false)
+        {
+            this.setState({currentPage:"Metadata"})
+            this.setState({is_valid_album_title:false})
+        }
+
+        
+    }
 
     render()
     {
         return(<React.Fragment>
+                    <audio className={`audio`+this.props.id} src={this.state.audio_url}  onLoadedMetadata={(e)=> {this.audioLoad(e)}}></audio>
                     <form className="card mt-5 mb-5">
-                        {this.renderHeader()}
-                        <div class="card-body row ">
-                            {this.state.currentPage=="Basic Info" ? this.renderBasicInfo()
+
+                        {((this.state.create_album == false) || (this.state.create_album==true && this.props.id == 0))? 
+                                <>
+                                {this.renderHeader()}
+                                <div class="card-body row ">
+                                {this.state.currentPage=="Basic Info" ? this.renderBasicInfo()
+                                    :null}
+                                {(this.state.currentPage=="Metadata" ) ? this.renderMetaData()
+                                    :null}
+                                {this.state.currentPage=="Permissions" ? this.renderPermissions()
                                 :null}
-                            {this.state.currentPage=="Metadata" ? this.renderMetaData()
-                                :null}
-                            {this.state.currentPage=="Permissions" ? this.renderPermissions()
-                            :null}
-                        </div>
-                        <button className="btn btn-danger" onClick={e=> {this.props.removeSong(e,this.props.song)}}>Remove</button>
+                            </div></>
+                        :
+                        <>
+                                {this.renderHeaderAlbumCopies()}
+                                <div class="card-body row ">
+                                {this.state.currentPage=="Basic Info" ? this.renderBasicInfo()
+                                    :null}
+                            </div></>
+                        }
+                        
+                        <button className="btn btn-danger" onClick={e => this.handleDelete(e)}><i class="bi bi-file-x-fill"></i> Remove</button>
                     </form>
             </React.Fragment>)
         
+    }
+
+    handleDelete = (e) => {
+        e.preventDefault()
+        this.props.removeSong(this.props.song)
     }
 }
 

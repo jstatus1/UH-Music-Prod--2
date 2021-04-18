@@ -184,3 +184,20 @@
       border-bottom-right-radius: 3px;
       border-top-right-radius: 3px;
     }
+
+.sidenavbar {
+  height: 100%;  
+  width: 25%;  
+  position: fixed; 
+  z-index: 1; 
+  top: 0; 
+  left: 0; 
+  background-color:#790b0b; 
+  transition: .5s ease; 
+  overflow-x: hidden; 
+  padding-top: 20px; 
+  display: flex; 
+  flex-direction: 
+  column; 
+  align-items: center;
+}
