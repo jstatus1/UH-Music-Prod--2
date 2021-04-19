@@ -76,7 +76,7 @@ class Header extends Component {
                         </Link>
               <li class="nav-item dropdown">
                 <div class="d-flex align-items-center">
-                <img className="avatar_image_navbar" src={this.props.auth.avatar} alt={() => this.setState({avatar_img: "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fdownload_87237.png&f=1&nofb=1"})}/>
+                <img className="avatar_image_navbar" src={this.props.auth.avatar === null ? this.props.auth.profile_img_url : this.props.auth.avatar} alt={() => this.setState({avatar_img: "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fdownload_87237.png&f=1&nofb=1"})}/>
 
                   <a class="nav-link dropdown-toggle" id="profile_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <t2>{this.props.auth.username}</t2>

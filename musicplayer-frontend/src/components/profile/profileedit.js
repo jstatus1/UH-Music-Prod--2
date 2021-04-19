@@ -62,7 +62,7 @@ const ProfileEdit = ({auth}) => {
             <div className={edit_profile ?  "display-off" : "display-on"}>
             <h2 style={{ "textAlign": "center", "paddingTop":"0.5em", "paddingBottom":"1em" }}>Your Profile</h2>
             </div>
-            <div  style={{"textAlign":"center"}}><img src={auth.profile_img_url} alt="null"/></div>
+            <div  style={{"textAlign":"center"}}><img src={auth.avatar === null ? auth.profile_img_url : auth.avatar} alt="null"/></div>
             <Container style={{"paddingTop":"30px"}}>
             <Form onSubmit = {updateAccount}>
             <Row>

@@ -24,8 +24,6 @@ const Home = () => {
                             <br/>
                             Click <Link to="/upload">Upload</Link> to add new music!
                             <br/>
-                            Check out your <Link to="/MakePlaylist">playlists</Link>
-                            <br/>
                             Update your About Me section in your <Link to="/profileedit">Profile</Link>!
                             <br/>
                             Your notifications can be viewed by clicking the bell on the navbar!

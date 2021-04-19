@@ -15,3 +15,13 @@
 {
     visibility: hidden;
 }
+.pic-off
+{
+    text-align: center;
+    display: none;
+}
+.pic-on
+{
+    text-align: center;
+    display: initial
+}
