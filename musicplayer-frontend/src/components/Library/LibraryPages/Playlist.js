@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import CreatePlaylistModal from './components/CreatePlaylistModal'
-import {Link} from 'react-router-dom'
 import { connect } from 'react-redux'
 import * as actions from '../../../store/actions'
 
@@ -10,11 +9,17 @@ import './Playlist.css'
 
 class Playlist extends PureComponent {
 
+    constructor(props)
+    {
+        super(props);
+        this.props.fetchPlaylist()
+    }
+
     renderPlaylistRow()
     {
         try{
             return this.props.fetch_playlist.map((playlist, index) => {
-               return(<SimpleAudioContainerLG id={index} playlist={playlist} link="/Library/Playlist"></SimpleAudioContainerLG>)
+               return(<SimpleAudioContainerLG id={index} playlist={playlist} link="/Library/Playlists" type="Playlist"></SimpleAudioContainerLG>)
              })
         }catch(err)
         {

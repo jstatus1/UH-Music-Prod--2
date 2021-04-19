@@ -1,26 +1,29 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../store/actions'
-import $ from "jquery";
 import axios from 'axios'
 
 import './PlaylistModal.css'
-
-
 import PlaylistModalRow from './PlaylistModalRow'
 
 
 
 class PlaylistModal extends PureComponent {
     
-    state = {
-        currentpage: "AddToPlaylist",
-        song_image: this.props.song_image,
-        isPublic: true,
-        title: null,
-        isValid: true,
-        UploadSuccess: false
+    constructor(props)
+    {
+        super(props)
+        this.state = {
+            currentpage: "AddToPlaylist",
+            song_image: this.props.song_image,
+            isPublic: true,
+            title: null,
+            isValid: true,
+            UploadSuccess: false
+        }
+        this.props.fetchPlaylist()
     }
+    
 
     onClickFunction(e)
     {

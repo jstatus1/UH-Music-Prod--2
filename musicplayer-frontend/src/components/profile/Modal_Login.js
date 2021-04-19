@@ -132,18 +132,18 @@ class ModalLogin extends React.Component
                     </div>
                     <div class="modal-body">
                         <div class="d-grid gap-2">
-                            <button type="button" class="provider-fb btn  justify-content-center align-items-center" >
+                            {/* <button type="button" class="provider-fb btn  justify-content-center align-items-center" >
                             <i class="profider-icon bi bi-facebook"></i>
                                 Continue With Facebook
-                            </button>
+                            </button> */}
                             <a type="button" class="provider-google btn" href="/auth/google">
                                 <i class="profider-icon bi bi-google"></i>
                                 Continue With Google
                             </a>
-                            <button type="button" class="provider-apple btn" >
+                            {/* <button type="button" class="provider-apple btn" >
                                 <img className="profider-icon-apple" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.clker.com%2Fcliparts%2Fi%2Fs%2FH%2Ff%2F4%2FT%2Fapple-logo-white-hi.png&f=1&nofb=1"></img>
                                 Continue With Apple
-                            </button>
+                            </button> */}
                             <hr></hr>
                             <input type="email" class={`form-control ${this.state.validEmail? null: "is-invalid"}`} id="emailInput" placeholder="Your Email Address or Username" aria-label="email" aria-describedby="basic-addon1" onChange={e=> this.setState({email: e.target.value})} value={this.state.email} required />
                             {

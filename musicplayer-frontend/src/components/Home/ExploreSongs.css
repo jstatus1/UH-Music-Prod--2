@@ -1,0 +1,15 @@
+.vertical-scrollable {
+    height:500px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+  }
+
+  .Explore-Items
+  {
+      margin-top: 50px;
+      margin-bottom: 50px;
+  }
+
+  .vertical-scrollable ::-webkit-scrollbar-thumb {
+     background: none;
+    }   

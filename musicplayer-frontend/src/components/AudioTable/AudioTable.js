@@ -1,20 +1,21 @@
 import React from 'react'
 import "./AudioTable.css"
 
-import { connect } from 'react-redux'
-import * as actions from '../../store/actions'
-
 import AudioTableRow from './AudioTable_Row'
 
 class AudioTable extends React.Component {
     
     renderRows()
     {
-        if(this.props.fetch_track)
-         return this.props.fetch_track.map((song,index)=>{
-            return(<AudioTableRow song={song} id={index}></AudioTableRow>)
-         }) 
-         return null   
+        try{
+            return this.props.fetch_track.map((song,index)=>{
+                return(<AudioTableRow song={song} id={index}></AudioTableRow>)
+             }) 
+        }catch(err)
+        {
+            console.log(err)
+            return null  
+        }
     }
     
     render() {

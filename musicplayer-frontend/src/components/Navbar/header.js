@@ -33,6 +33,8 @@ class Header extends Component {
       case false:
           return(
               <ul className="navbar-nav ms-auto">
+                
+
                         <li className="nav-link">
                           <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#SignInModal" >
                             Sign In
@@ -42,6 +44,8 @@ class Header extends Component {
                         <li className="nav-link">
                           <button role="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#SignInModal">Create Account</button>
                         </li>
+
+                        
               </ul>
           )
       default:
@@ -75,7 +79,7 @@ class Header extends Component {
                 <img className="avatar_image_navbar" src={this.props.auth.avatar} alt={() => this.setState({avatar_img: "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fdownload_87237.png&f=1&nofb=1"})}/>
 
                   <a class="nav-link dropdown-toggle" id="profile_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <small>{this.props.auth.username}</small>
+                    <t2>{this.props.auth.username}</t2>
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="profile_dropdown">
                    
@@ -83,34 +87,7 @@ class Header extends Component {
                           className="dropdown-item" aria-current="page" to={`/profileedit`}>
                             Profile
                       </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            Likes
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            Playlist
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            Stations
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            Following
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            Who To Follow
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            Try Pro
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            Distribute
-                      </Link>
+                      
                   </ul>
                 </div>
                 
@@ -132,13 +109,7 @@ class Header extends Component {
                 </div>
               </li>
 
-              <li className="nav-item">
-                  <a class="nav-link " aria-current="page" href="#">
-                    <span class="material-icons">
-                      mail
-                    </span>
-                    </a>
-              </li>
+              
               <li class="nav-item dropdown">
                 <a class="nav-link " id="profile_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <span class="material-icons">
@@ -146,58 +117,7 @@ class Header extends Component {
                   </span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="profile_dropdown">
-                <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            About Us
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            Legal
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            Copyright
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            Get UH Sound Cloud +
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            Mobile Apps
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            For Creators
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            Blog
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            Jobs
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            Developers
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            Support
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            Keyboard Shortcuts
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/${this.props.auth.username}`}>
-                            Subscription
-                      </Link>
-                      <Link 
-                          className="dropdown-item" aria-current="page" to={`/Settings`}>
-                            Settings
-                      </Link>
+                        
                       
                   <li><a class="dropdown-item" href="/api/logout">Sign Out</a></li>
                 </ul>
@@ -216,9 +136,10 @@ class Header extends Component {
         <ModalLogin ></ModalLogin>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <Link 
-              className="navbar-brand" to={this.props.auth ? '/discovery' : '/'}>
+              className="navbar-brand" to={this.props.auth ? '/home' : '/'}>
                 <img class="logo-size" src={logo} alt="Logo"/>
             </Link>
+
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>

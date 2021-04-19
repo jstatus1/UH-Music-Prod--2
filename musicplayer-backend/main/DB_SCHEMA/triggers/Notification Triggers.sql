@@ -97,7 +97,6 @@ BEGIN
 	END LOOP;
 RETURN NULL;
 END;
-$$
 
 -------------------------------------------------------------------------
 
@@ -162,7 +161,7 @@ $$
 -------------------------------------------------------------------------
 
 CREATE TRIGGER unfollowed_notification_trigger
-BEFORE DELETE ON follows
+AFTER DELETE ON follows
 FOR EACH ROW
 EXECUTE PROCEDURE unfollowed_notification();
 

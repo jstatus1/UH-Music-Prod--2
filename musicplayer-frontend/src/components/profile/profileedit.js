@@ -175,6 +175,7 @@ const ProfileEdit = ({auth}) => {
             </Row>
             </Form>
             </Container>
+            <div style={{"marginTop":"70px"}}/>
         </div>
     )
 }

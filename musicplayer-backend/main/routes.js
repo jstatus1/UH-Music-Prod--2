@@ -296,7 +296,6 @@ router.post('/api/posts/userprofiletodb', (req, res, next) => {
     const query = `SELECT S.title, U.username,  U.first_name, U.last_name, A.album_title, S.duration, S.release_date, S.record_label
                   FROM  songs S, albums A, users U
                   WHERE S.user_id = U.uid AND
-                        S.album_id = A.album_id AND
                         ${searchFormLogic('S','title',title, 1)} AND
                         ${searchFormLogic('U','username',username,2)} AND
                         ${searchFormLogic('U','first_name',first_name,3)} AND

@@ -3,13 +3,22 @@ import "./Banner.css"
 
 import {connect} from 'react-redux'
 import * as action from '../../store/actions'
+import { Redirect } from 'react-router';
 
 
 class Banner extends React.Component
 {
-    state={
-        TotalDuration: 0
+    constructor(props)
+    {
+        super(props);
+
+        this.state={
+            TotalDuration: 0
+        }
+
+        
     }
+    
 
     secondsToHms(d) {
 
@@ -23,16 +32,6 @@ class Banner extends React.Component
         return (d < 3600)? ('0' + m).slice(-2) + ":" + ('0' + s).slice(-2) :
         ('0' + h).slice(-2) + ":" + ('0' + m).slice(-2) + ":" + ('0' + s).slice(-2);
     }
-
-    componentDidMount()
-    {
-        if(this.props.fetch_track)
-            this.props.fetch_track.map((song) => {
-                console.log(song.duration)
-                this.setState({TotalDuration: (song.duration + this.state.TotalDuration)})
-            })
-    }
-
 
   
 
@@ -62,7 +61,7 @@ class Banner extends React.Component
                     </div>
                     <div className="col-6  d-flex flex-row Banner_Album">
                         
-                        <img className="Banner_Album_Image" src={this.props.selectedAudio.song_image}></img>
+                        <img className="Banner_Album_Image" src={this.props.selectedAudio.song_image || this.props.selectedAudio.album_art}></img>
                     </div>
                     </React.Fragment>
                     :null

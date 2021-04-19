@@ -36,7 +36,7 @@ class RegularNotificationContainerLink extends React.Component
                     <img className="avatar_image" src={this.state.avatar_img} alt="Avatar"/>
                 </div>
                 <div class="col-6">
-                    <small><b>{this.state.sender_name} </b> has just a new album!</small>
+                    <small><b>{this.state.sender_name} </b> has just dropped a new album!</small>
                     <div className="date_text d-flex flex-column">  
                         <i class="bi bi-people"> {this.state.date}</i>
                     </div>

@@ -11,17 +11,18 @@ import "./Tracks.css"
 
 class Tracks extends React.Component
 {
-    state = {
-        totalAudio: null,
-        totalDurationSeconds: 0
-    }
-
-    
-      
-    componentDidMount()
+    constructor(props)
     {
-        
-       
+        super(props);
+        this.state = {
+            totalAudio: null,
+            totalDurationSeconds: 0
+        }
+    }
+   
+
+    componentDidMount()
+    {  
         try{
             this.fetchTrack.then(() => {
                 
@@ -33,10 +34,7 @@ class Tracks extends React.Component
         }catch(err)
         {
             
-        }
-            
-        
-        
+        }  
     }
    
     render()

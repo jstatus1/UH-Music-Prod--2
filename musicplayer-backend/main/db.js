@@ -12,4 +12,3 @@ let pool = new Pool({
 
 module.exports = pool
 
-

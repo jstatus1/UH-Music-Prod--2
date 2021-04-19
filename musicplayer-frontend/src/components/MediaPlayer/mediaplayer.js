@@ -8,7 +8,6 @@ import "./MediaPlayer.css"
 class MediaPlayer extends React.Component
 {   
     state ={
-        isPlaying: false,
         songDuration: null,
         currentDuration: null,
         timeFormatNormal: true
@@ -24,6 +23,7 @@ class MediaPlayer extends React.Component
     componentDidUpdate()
     {
         let audio = document.getElementById('audio');
+        
         if(this.props.audioSetting)
         {
             audio.play()

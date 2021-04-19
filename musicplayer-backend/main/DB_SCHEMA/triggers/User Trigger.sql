@@ -18,6 +18,20 @@ BEGIN
 RETURN NULL;
 END;
 $$
+-----------------------------------------------------------
+user_setting_creation_trigger
+DECLARE
+BEGIN
+    EXECUTE format('INSERT INTO settings
+    (
+        user_id
+    )
+    VALUES( $1)') 
+        using 
+            NEW.uid;
+	
+RETURN NULL;
+END;
 
 -------------------------------------------------------------------------
 
