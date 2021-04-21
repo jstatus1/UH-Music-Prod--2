@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import * as action from '../../../store/actions'
 import axios from 'axios'
 
+import PlaylistModal from '../../AudioTable/PlaylistModal'
 class SimpleAudioContainer extends React.Component
 {
     constructor(props)
@@ -12,8 +13,8 @@ class SimpleAudioContainer extends React.Component
         super(props)
         this.state={
             mouse_in: false,
-            current_songPlaying: false,
             link: '/Library/Overview',
+            current_songPlaying: false,
             authorityToDelete: false
         }
         
@@ -57,15 +58,16 @@ class SimpleAudioContainer extends React.Component
 
     audioLogic()
     {
-    
         this.props.selectSong(this.props.song)
         if(this.state.current_songPlaying)
         {
-            
+            //pause the music
+            localStorage.setItem("isPlaying", false)
             this.setState({current_songPlaying:false})
             this.props.setAudio(false)
         }else{
-            
+            //play the music
+            localStorage.setItem("isPlaying", true)
             this.setState({current_songPlaying:true})
             this.props.setAudio(true)
         }
@@ -130,6 +132,27 @@ class SimpleAudioContainer extends React.Component
         }
     }
 
+    moreFeatureLogic()
+    {
+        switch(this.props.type)
+        {
+            case "track":
+               return(<ul class="dropdown-menu dropend" aria-labelledby="trackDropdownExtra">
+                            <li><a class="dropdown-item"><i class="bi bi-music-note-list"></i> Add To Next Up</a></li>
+                            <li> <a type="button" class="btn" data-bs-toggle="modal" data-bs-target={`#playlistModal${this.props.song.song_id}`} class="dropdown-item">Add To Playlist</a></li>    
+                     </ul>)
+            case "playlist":
+                return(<ul class="dropdown-menu dropend" aria-labelledby="trackDropdownExtra">
+                            <li><a class="dropdown-item"><i class="bi bi-music-note-list"></i> Add To Next Up</a></li>
+                     </ul>)
+            case "album":
+                return(<ul class="dropdown-menu dropend" aria-labelledby="trackDropdownExtra">
+                            <li><a class="dropdown-item"><i class="bi bi-music-note-list"></i> Add To Next Up</a></li>
+                     </ul>)
+            default:
+                break;
+        }
+    }
 
     displayLogic()
     {
@@ -143,18 +166,28 @@ class SimpleAudioContainer extends React.Component
                 }
                 
                 <div className="playbutton">
-                <a onClick={() => this.audioLogic()}>
-                    {(this.props.selectedAudio == this.props.song && this.props.audioSetting)?
-                        <i class="bi bi-pause-circle-fill"></i>:
-                        <i class="bi bi-play-circle-fill"></i>
-                    }
-                        </a>
-                    </div></>)
+                    <a onClick={() => this.audioLogic()}>
+                        {(this.props.selectedAudio.song_id == this.props.song.song_id && 
+                        JSON.parse(localStorage.getItem('isPlaying')))?
+                            <i class="bi bi-pause-circle-fill"></i>:
+                            <i class="bi bi-play-circle-fill"></i>}
+                    </a>
+                </div>
+                
+                <div className="likeButton">
+                    <i class="bi bi-heart-fill"></i>
+                </div>
+                <div className="addToPlaylistButton dropdown" >
+                    <Link className=" buttonStyle" role="button" id="trackDropdownExtra" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots"></i></Link>
+                    {this.moreFeatureLogic()}
+                </div>
+                </>)
     }
 
     render()
     {
         return(
+            <React.Fragment>
             <div class="badge_items mr-3" key={this.props.id}>
                 <div className="audio_artwork" onMouseEnter={() => this.setState({mouse_in:true})} onMouseLeave={() => this.setState({mouse_in:false})}>
                     <Link to={this.state.link}>
@@ -176,8 +209,10 @@ class SimpleAudioContainer extends React.Component
                         <t6>{this.props.song.username}</t6>
                     </div>
                 </div>
-
             </div>
+            <PlaylistModal id={this.props.song.song_id} song={this.props.song} song_image={this.props.song.song_image}></PlaylistModal>
+
+            </React.Fragment>
         )
     }
 }
@@ -185,7 +220,6 @@ class SimpleAudioContainer extends React.Component
 function mapStateToProps(state) {
     return { 
       selectedAudio: state.selected_audio_reducer,
-      audioSetting: state.set_audio_reducer,
       previousAudio: state.set_previous_audio_reducer,
       auth: state.auth_reducer
      };

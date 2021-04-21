@@ -20,6 +20,7 @@ class Library extends React.Component
         return(
             <React.Fragment>
                 <div className="library_header mt-4">
+                    <h2 style={{"paddingLeft":"0.5em"}}>Your Music</h2>
                     <div className="library_label_group">
                         <Link to="/Library/Overview"><button onClick={e=>{this.onClickFunction(e)}} value="overview" className={`btn library_labels ${this.state.currentpage==("overview")? 'active': null}`}>Overview</button></Link>  
                         <Link to="/Library/Tracks"><button onClick={e=>{this.onClickFunction(e)}} value="tracks" className={`btn library_labels ${this.state.currentpage==("tracks")? 'active': null}`}>Tracks</button></Link>

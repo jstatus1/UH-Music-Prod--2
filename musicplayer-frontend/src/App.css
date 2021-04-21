@@ -201,3 +201,12 @@
   column; 
   align-items: center;
 }
+
+
+body {
+  background-color: rgba(236, 235, 235, 0.678) !important;
+}
+
+.container{
+  background-color: #fff;
+}

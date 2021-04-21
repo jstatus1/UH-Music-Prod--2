@@ -1,15 +1,30 @@
 import { React, useState, useEffect } from 'react'
-import { Form, Row, Col, Container, Button, Table } from 'react-bootstrap'
+import { Form, Row, Col, Container, Button, Table, Modal } from 'react-bootstrap'
 import axios from 'axios'
+import { connect } from 'react-redux'
+import * as actions from '../../../store/actions'
+import { useHistory } from "react-router-dom"
 import '../Reports.css'
 
-const Reports_Playlists = () => {
+const Reports_Playlists = ({auth}) => {
+    const [is_admin, setAdmin] = useState(auth.is_admin);
     const [playlist_name, setPlaylistName] = useState('');
     const [username, setUsername] = useState('');
     const [first_name, setFirstName] = useState('');
     const [last_name, setLastName] = useState('');
     const [playlistData, setPlaylistData] = useState([]);
     const [searchIsClicked, setSearchIsClicked] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+
+    let history = useHistory();
+
+    const handleClose = (event) => {
+        setShowModal(false);
+    }
+
+    const handleHome = (event) => {
+        history.push("/home");
+    }
 
     const playlistSearch = (event) => {
 
@@ -39,6 +54,23 @@ const Reports_Playlists = () => {
             console.log(error)
         })
         console.log(queryInput);
+    }
+
+    const deletePlaylist = (playlist_info) => {
+        axios.get('/api/delete/playlist', {
+            params: {
+                playlist_name: playlist_info.playlist_name,
+            username: playlist_info.username,
+            first_name: playlist_info.first_name,
+            last_name: playlist_info.last_name,
+            }})
+            .then((res) => {
+                console.log('Playlist deleted!')
+                setShowModal(true);
+                
+
+
+            })
     }
 
     return (
@@ -85,7 +117,7 @@ const Reports_Playlists = () => {
                         <Row style={{"paddingBottom":"1em", "paddingTop":"1em"}}>
                             <Col md="5"/>
                             <Col md="auto">
-                                <Button variant="secondary" onClick={() => window.location.reload()}>Reset</Button>
+                                <Button variant="secondary" onClick={() => handleHome()}>Go to Home</Button>
                             </Col>
                             
                             <Col>
@@ -104,6 +136,9 @@ const Reports_Playlists = () => {
                 <Table striped hover responsive bordered>
                     <thead>
                         <tr>
+                            <div  className={is_admin ? "display-on" : "display-off"}>
+                            <th>Admin</th>
+                            </div>
                             <th>Playlist Name</th>
                             <th>Creator Username</th>
                             <th>Creator First Name</th>
@@ -115,13 +150,16 @@ const Reports_Playlists = () => {
 
                             
                             return <tr>
+                                <td className={is_admin ? "display-on" : "display-off"}>
+                                    <Button variant="danger"
+                                            onClick={(e) => deletePlaylist(playlist)}>Delete</Button>
+                                </td>
                                 <td>{playlist.playlist_name}</td>
                                 <td>{playlist.username}</td>
                                 <td>{playlist.first_name}</td>
                                 <td>{playlist.last_name}</td>
                             </tr>
                             
-                            return null
                             
                         })}
                     </tbody>
@@ -129,10 +167,26 @@ const Reports_Playlists = () => {
                 
             </Container>
 
+            <Modal show={showModal} onHide={(e) => handleClose()}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Playlist Deleted</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Another fire playlist bites the dust</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={(e) => handleClose()}>Close</Button>
+                    <Button variant="danger" onClick={(e) => handleHome()}>Go to Home</Button>
+                </Modal.Footer>
+            </Modal>
+
 
             <div style={{ 'marginTop':'50px'}}/>
         </div>
     )
 }
 
-export default Reports_Playlists
+const mapStateToProps = state => ({
+    auth: state.auth_reducer
+});
+  
+
+export default connect(mapStateToProps, actions)(Reports_Playlists)

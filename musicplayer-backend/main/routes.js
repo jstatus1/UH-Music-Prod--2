@@ -260,13 +260,15 @@ router.post('/api/posts/userprofiletodb', (req, res, next) => {
  
     const values = [ username, first_name, last_name ]
     console.log(values);
+    let query = ``
 
-    const query = `SELECT username, musician, first_name, last_name, socialmedia_fb, record_label
+    
+      query = `SELECT username, first_name, last_name, socialmedia_fb, record_label
     socialmedia_tw, socialmedia_in, record_label, num_listeners 
     FROM users 
     WHERE ${searchFormLogic('','username', username, 1)} AND
           ${searchFormLogic('','first_name',first_name,2)} AND
-          ${searchFormLogic('','last_name',last_name,3)}`;
+          ${searchFormLogic('','last_name',last_name,3)}` 
 
     console.log(query);
 
@@ -275,7 +277,6 @@ router.post('/api/posts/userprofiletodb', (req, res, next) => {
                   {
                     console.log(q_err)
                   }
-                  console.log(q_res.rows)
                   res.json(q_res.rows);
                 });
   });
@@ -288,20 +289,28 @@ router.post('/api/posts/userprofiletodb', (req, res, next) => {
     const last_name = req.query.last_name == '' ? 'nodata' : req.query.last_name;
     const record_label = req.query.record_label == '' ? 'nodata' : req.query.record_label;
 
-    const values = [ title, username, first_name, last_name, album_title ]
+    let values = []
     console.log(values);
+    let query = ``
 
-
-
-    const query = `SELECT S.title, U.username,  U.first_name, U.last_name, A.album_title, S.duration, S.release_date, S.record_label
-                  FROM  songs S, albums A, users U
-                  WHERE S.user_id = U.uid AND
-                        ${searchFormLogic('S','title',title, 1)} AND
-                        ${searchFormLogic('U','username',username,2)} AND
-                        ${searchFormLogic('U','first_name',first_name,3)} AND
-                        ${searchFormLogic('U','last_name',last_name,4)} AND
-                        ${searchFormLogic('A','album_title',album_title,5)}`
-                        ;
+    if (title === 'nodata' && username === 'nodata' && first_name === 'nodata' && last_name === 'nodata' && album_title === 'nodata') {
+      query = `select S.title, U.username,  U.first_name, U.last_name, A.album_title, S.duration, S.release_date, S.record_label  
+              from songs S left outer join users U 
+              on S.user_id = U.uid 
+              left outer join albums A on S.album_id = A.album_id`
+    } else {
+      values = [ title, username, first_name, last_name, album_title ]
+      query = `select * from (select S.title, U.username,  U.first_name, U.last_name, A.album_title, S.duration, S.release_date, S.record_label  
+                from songs S left outer join users U 
+                on S.user_id = U.uid 
+                left outer join albums A on S.album_id = A.album_id) as foo
+                where
+                        ${searchFormLogic('','title',title, 1)} AND
+                        ${searchFormLogic('','username',username,2)} AND
+                        ${searchFormLogic('','first_name',first_name,3)} AND
+                        ${searchFormLogic('','last_name',last_name,4)} AND
+                        ${searchFormLogic('','album_title',album_title,5)}`
+    }
 
     console.log(query);
 
@@ -396,6 +405,83 @@ router.post('/api/posts/userprofiletodb', (req, res, next) => {
         console.log(q_err);
         res.status(401).send({ status: false });
         
+      }
+      else {
+        
+        res.send({status: true}) 
+        }})
+                            
+  })
+
+  router.get('/api/delete/user', async (req,res,next) => {
+    const username = req.query.username;
+    const first_name = req.query.first_name;
+    const last_name = req.query.last_name;
+    
+    const values = [ username, first_name, last_name ]
+    console.log(values)
+
+    const query = `DELETE FROM users WHERE username = $1 
+                   AND first_name = $2 AND last_name = $3`
+
+    console.log(query)
+
+    await pool.query(query, values, (q_err, q_res)=> {
+      if(q_err) {
+        console.log(q_err);
+        res.status(401).send({ status: false });
+      }
+      else {
+        
+        res.send({status: true}) 
+        }})
+                            
+  })
+
+  router.get('/api/delete/album', async (req,res,next) => {
+    const album_title = req.query.album_title;
+    const username = req.query.username;
+    const first_name = req.query.first_name;
+    const last_name = req.query.last_name;
+    
+    const values = [ album_title, username, first_name, last_name ]
+    console.log(values)
+
+    const query = `DELETE FROM albums WHERE album_title = $1 
+                   AND user_id = (SELECT uid FROM users WHERE username = $2 AND first_name = $3 AND last_name = $4)`
+
+    console.log(query)
+
+    await pool.query(query, values, (q_err, q_res)=> {
+      if(q_err) {
+        console.log(q_err);
+        res.status(401).send({ status: false });
+      }
+      else {
+        
+        res.send({status: true}) 
+        }})
+                            
+  })
+
+  router.get('/api/delete/playlist', async (req,res,next) => {
+    const playlist_name = req.query.playlist_name;
+    const username = req.query.username;
+    const first_name = req.query.first_name;
+    const last_name = req.query.last_name;
+    
+    const values = [ playlist_name, username, first_name, last_name ]
+    console.log(values)
+
+    const query = `DELETE FROM playlists WHERE playlist_name = $1 
+                   AND user_id = (SELECT uid FROM users WHERE username = $2 AND first_name = $3 AND last_name = $4)`
+
+    console.log(query)
+
+    await pool.query(query, values, (q_err, q_res)=> {
+      if(q_err) {
+        console.log(q_err);
+        res.status(401).send({ status: false });
       }
       else {
         

@@ -1,12 +1,16 @@
 import { React, useState, useEffect } from 'react'
-import { Form, Row, Col, Container, Button, Table } from 'react-bootstrap'
+import { Form, Row, Col, Container, Button, Table, Modal } from 'react-bootstrap'
 import axios from 'axios'
 import '../Reports.css'
+import { connect } from 'react-redux'
+import * as actions from '../../../store/actions'
+import { useHistory } from "react-router-dom"
 //import ReportTable from './ReportTable'
 
 
-const Reports_Users = (props) => { 
+const Reports_Users = ({auth}) => { 
 
+    const [is_admin, setAdmin] = useState(auth.is_admin);
     const [username, setUsername] = useState('');
     const [first_name, setFirstName] = useState('');
     const [last_name, setLastName] = useState('');
@@ -14,7 +18,17 @@ const Reports_Users = (props) => {
     const [record_label, setRecordLabel] = useState('');
     const [userData, setUserData] = useState([]);
     const [searchIsClicked, setSearchIsClicked] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
+    let history = useHistory();
+
+    const handleClose = (event) => {
+        setShowModal(false);
+    }
+
+    const handleHome = (event) => {
+        history.push("/home");
+    }
 
 
     const userSearch = (event) => {
@@ -49,6 +63,19 @@ const Reports_Users = (props) => {
 
         
 
+    }
+
+    const deleteUser = (user_info) => {
+        axios.get('/api/delete/user', {
+            params: {
+                username: user_info.username,
+                first_name: user_info.first_name,
+                last_name: user_info.last_name,
+            }})
+            .then((res) => {
+                console.log('Song deleted!')
+                setShowModal(true)
+            })
     }
     
 
@@ -91,7 +118,7 @@ const Reports_Users = (props) => {
                         <Row style={{"paddingBottom":"1em", "paddingTop":"1em"}}>
                             <Col md="5"/>
                             <Col md="auto">
-                                <Button variant="secondary" onClick={() => window.location.reload()}>Reset</Button>
+                                <Button variant="secondary" onClick={() => handleHome()}>Go to Home</Button>
                             </Col>
                             
                             <Col>
@@ -110,6 +137,9 @@ const Reports_Users = (props) => {
                 <Table striped hover responsive bordered>
                     <thead>
                         <tr>
+                            <div className={is_admin ? "display-on" : "display-off"}>
+                            <th>Admin</th>
+                            </div>
                             <th>Username</th>
                             <th>First Name</th>
                             <th>Last Name</th>
@@ -119,6 +149,10 @@ const Reports_Users = (props) => {
                     <tbody>
                         {userData.map(user => {
                             return <tr>
+                                <td className={is_admin ? "display-on" : "display-off"}>
+                                    <Button variant="danger"
+                                            onClick={(e) => deleteUser(user)}>Delete</Button>
+                                </td>
                                 <td>{user.username}</td>
                                 <td>{user.first_name}</td>
                                 <td>{user.last_name}</td>
@@ -134,10 +168,26 @@ const Reports_Users = (props) => {
                 
             </Container>
 
+            <Modal show={showModal} onHide={(e) => handleClose()}>
+                <Modal.Header closeButton>
+                    <Modal.Title>User Deleted</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Banished!</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={(e) => handleClose()}>Close</Button>
+                    <Button variant="danger" onClick={(e) => handleHome()}>Go to Home</Button>
+                </Modal.Footer>
+            </Modal>
+
 
             <div style={{ 'marginTop':'50px'}}/>
         </div>
     )
 }
 
-export default Reports_Users
+const mapStateToProps = state => ({
+    auth: state.auth_reducer
+});
+  
+
+export default connect(mapStateToProps, actions)(Reports_Users)

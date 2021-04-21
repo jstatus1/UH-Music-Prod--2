@@ -10,7 +10,7 @@ export default class SearchBar extends PureComponent {
     render() {
         return (
             <div className="d-flex flex-row"> 
-                 <input class="form-control me-2" type="search" 
+                 <input type="text" class="form-control me-2 searchbar-input" type="search" 
                     placeholder="Search" aria-label="Search" 
                     onChange={(e)=> {this.setState({searchTerm: e.target.value})}}/>
                  <Link to={ `${'/Search/'+this.state.searchTerm}` } className="btn btn-danger">Search</Link> 

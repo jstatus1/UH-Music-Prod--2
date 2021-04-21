@@ -7,7 +7,6 @@ import Upload from '../components/Upload/upload'
 import ProfileEdit from '../components/profile/profileedit'
 import ProfileView from '../components/profile/ProfileView'
 import DropZone from '../components/Upload/drop-zone'
-import MediaPlayer from '../components/MediaPlayer/mediaplayer'
 import Home from '../components/Home/Home'
 import Notification from '../components/Navbar/notifcations/notificaiton_page'
 import Reports from '../components/Reports/Reports'
@@ -24,7 +23,6 @@ import Search from '../components/SearchBar/Search'
 import Settings from '../components/Settings/Settings'
 import SettingsNav from '../components/Settings/SettingsNav'
 import DisplaySongsPage from '../components/Library/LibraryPages/components/DisplaySongsPage'
-const Dashboard = () => <h2>Dashboard</h2>
 
 
 const LibraryRoutes = ({ match }) => (
@@ -33,9 +31,11 @@ const LibraryRoutes = ({ match }) => (
         <LibraryNav></LibraryNav>
         <Route exact path={match.url} component={Overview}/>
         <Route exact path={match.url + "/overview"} component={Overview}/>
-        <Route exact path={match.url + "/tracks"} render={props => <DisplaySongsPage {...props.match.params} type="Tracks"/>}/>
+        <Route exact path={match.url + "/tracks"} component={Tracks}/>
+        <Route exact path={match.url + "/:title/:song_id"} render={props => <DisplaySongsPage {...props.match.params} type="Tracks"/>}/>
         <Route path={match.url + "/playlists"} component={PlaylistRoutes}/>
         <Route path={match.url + "/albums"} component={AlbumRoutes}/>
+        
     </div>
 )
 
@@ -73,9 +73,11 @@ const SettingsRoutes = ({ match }) => (
 let Routes = () =>
 {
     return(<div>
+        
         <BrowserRouter>
-             <div className="container">
+             <div >
                  <Header/>
+                 <div className="container">
                  <Route exact path="/" component={Landing}/>
                  <Route exact path="/discovery" component={Home}/>
                  <Route exact path="/home" component={Home}></Route>
@@ -88,11 +90,11 @@ let Routes = () =>
                  <Route exact path="/profileview" component={ProfileView}></Route>
                  <Route path="/search/" component={SearchRoutes}></Route>
                  <Route path="/settings/" component={SettingsRoutes}></Route>
-                
+                 </div>
              </div>
             
         </BrowserRouter> 
-        <MediaPlayer/>
+       
      </div>)
 }
 

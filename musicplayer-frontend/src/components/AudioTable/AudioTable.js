@@ -9,7 +9,11 @@ class AudioTable extends React.Component {
     {
         try{
             return this.props.fetch_track.map((song,index)=>{
-                return(<AudioTableRow song={song} id={index}></AudioTableRow>)
+                return(<AudioTableRow song={song} id={index} type={this.props.type} 
+                                      playlist_name={this.props.playlist_name}
+                                      removeSong={this.props.removeSong}
+                                      playlist_id={this.props.playlist_id}>
+                        </AudioTableRow>)
              }) 
         }catch(err)
         {

@@ -1,8 +1,50 @@
+.navbar{
+ background-color: black  !important;
+ 
+}
+
+.nav-link{
+  color: white !important;
+}
+
 .notification_box
 {
     position: relative;
     display: inline-block;
 }
+
+.SearchBar
+{
+  margin-left: 300px;
+}
+
+.searchbar-input
+{
+  width: 600px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #ffffff;
+  outline: none !important;
+}
+
+.searchbar-input:focus
+{
+
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #ffffff;
+  outline: none !important;
+  box-shadow: none;
+  color: white  !important;
+}
+
+.searchbar-input::placeholder
+{
+
+  color: white;
+  opacity: 1;
+}
+
 
 
 .badge {

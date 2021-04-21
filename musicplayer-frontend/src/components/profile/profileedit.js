@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Row, Col, Container, } from 'react-bootstrap'
+import { Form, Button, Row, Col, Container, Modal } from 'react-bootstrap'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import * as actions from '../../store/actions'
 import { useHistory } from "react-router-dom"
+import profile_logo from './uhicon.ico'
 import "./profile.css"
 
 const ProfileEdit = ({auth}) => {
@@ -18,7 +19,18 @@ const ProfileEdit = ({auth}) => {
     const [edit_profile, setEditProfile] = useState(false);
     const [account_updated, setUpdated] = useState(false);
     const [query_status, setQueryStatus] = useState(0);
+    const [showModal, setShowModal] = useState(false);
+
     let history = useHistory();
+
+    const handleClose = (event) => {
+        setShowModal(false);
+    }
+
+    const handleHome = (event) => {
+        history.push("/home");
+    }
+
 
 
     const updateAccount = (event) => {
@@ -44,7 +56,7 @@ const ProfileEdit = ({auth}) => {
                 console.log('User updated!')
                 setUpdated(true);
                 setEditProfile(false);
-                history.push("/")
+                setShowModal(true);
             
             
         }).catch((error) => {
@@ -62,7 +74,10 @@ const ProfileEdit = ({auth}) => {
             <div className={edit_profile ?  "display-off" : "display-on"}>
             <h2 style={{ "textAlign": "center", "paddingTop":"0.5em", "paddingBottom":"1em" }}>Your Profile</h2>
             </div>
-            <div  style={{"textAlign":"center"}}><img src={auth.avatar === null ? auth.profile_img_url : auth.avatar} alt="null"/></div>
+            <div  style={{"textAlign":"center"}}>
+            <div className={auth.avatar === null && auth.profile_img_url === null ? "display-off" : "display-on"}><img src={auth.avatar === null ? auth.profile_img_url : auth.avatar} alt="go coogs"/></div>
+                <div className={auth.avatar === null && auth.profile_img_url === null ? "display-on" : "display-off"}><img src={auth.avatar === null && auth.profile_img_url === null ? profile_logo : null} alt="go coogs"/></div>
+                </div>
             <Container style={{"paddingTop":"30px"}}>
             <Form onSubmit = {updateAccount}>
             <Row>
@@ -175,6 +190,18 @@ const ProfileEdit = ({auth}) => {
             </Row>
             </Form>
             </Container>
+
+            <Modal show={showModal} onHide={(e) => handleClose()}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Profile Updated!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Your profile information has been updated</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={(e) => handleClose()}>Close</Button>
+                    <Button variant="danger" onClick={(e) => handleHome()}>Go to Home</Button>
+                </Modal.Footer>
+            </Modal>
+            
             <div style={{"marginTop":"70px"}}/>
         </div>
     )
