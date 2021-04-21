@@ -15,7 +15,7 @@
 {
     min-width: 150px;
     height: 150px;
-    line-height: 10px;
+    line-height: 150px;
     margin-right: 5em;
     position: relative;
 }
@@ -61,7 +61,7 @@
     color: rgb(0, 0, 0);
     position: absolute;
     text-align: center;
-    top:.8em;
+    top:-.05em;
     left: .8em;
 
     z-index: 100;
@@ -75,7 +75,7 @@
     z-index: 100;
     font-size: 20px;
     text-align: center;
-    top:.1em;
+    top:-3.1em;
     left: 6.5em;
 }
 
@@ -86,7 +86,7 @@
     z-index: 100;
     font-size: 20px;
     text-align: center;
-    top:6.2em;
+    top:3em;
     left: 6em;
 }
 
@@ -98,7 +98,7 @@
     z-index: 100;
     font-size: 15px;
     text-align: center;
-    top:8.5em;
+    top:4em;
     left: 6.5em;
 }
 
@@ -113,11 +113,19 @@
     color: inherit;
 }
 
-.dropdown-item{
-    line-height: 20px  !important;
+.dropdown-item-mini
+{
+    height: 20px !important;
 }
 
 
+
+.dropdown-menu li> a {
+    line-height: 100px;
+    height: 100px;
+    padding-top: 0;
+    padding: 0;
+}
 
 @-webkit-keyframes Gradient {
     0% {

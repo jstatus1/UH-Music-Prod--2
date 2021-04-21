@@ -18,11 +18,13 @@ export const SelectedAudioReducer = (selectedSong=null, action) => {
     return selectedSong
 }
 
+
+
 export const SetAudioReducer = (setting=null, action) => {
     if(action.type == 'AUDIO_SETTING')
     {
         return action.payload
     }
 
-    return  setting
+    return  false
 }

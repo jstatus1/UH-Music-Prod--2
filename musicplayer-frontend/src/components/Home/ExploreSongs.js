@@ -4,7 +4,6 @@ import axios from 'axios'
 import './ExploreSongs.css'
 import SimpleAudioContainer from '../Library/containers/SimpleAudioContainer'
 
-
 export default class ExploreSongs extends PureComponent {
     
     state={
@@ -125,7 +124,6 @@ export default class ExploreSongs extends PureComponent {
 
     render() {
         return (<React.Fragment>
-                        
                         <div className="row Explore-Items">
                         <h2 style={{ "paddingBottom":"1em"}}>Latest Hits</h2>
                             <div class="container latest-box">
@@ -154,7 +152,6 @@ export default class ExploreSongs extends PureComponent {
                                 </div>
                             </div>
                         </div>
-                        
             </React.Fragment>)
     }
 }
