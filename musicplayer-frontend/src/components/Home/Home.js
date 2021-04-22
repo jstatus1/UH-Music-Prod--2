@@ -12,6 +12,7 @@ const Home = () => {
     
     return (
         <div>
+            
             <Container>
                 <div style={{"paddingTop":"20px"}}/>
             <Row><Col md="6"><img class="logo" src={logo} alt="Logo" style={{"width":"500px", "height":"250px"}}/></Col></Row>

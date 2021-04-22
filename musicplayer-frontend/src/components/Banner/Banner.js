@@ -37,12 +37,12 @@ class Banner extends React.Component
 
     render()
     {
-        return(<div className={`Banner_Container Banner_Gradient col-12 d-flex flex-row justify-content-around align-items-center ${(this.props.audioSetting)?null:"Paused"}`}>
+        return(<div className={`Banner_Container Banner_Gradient col-12 d-flex flex-row justify-content-around align-items-center ${(localStorage.getItem("isPlaying"))?null:"Paused"}`}>
                 { (this.props.selectedAudio!= null )?
                     <React.Fragment>
                     <div className=" flex-column col-6 Banner_Container_Left justify-content-around" >
                         <div className="Banner_Title d-flex flex-row">
-                             <button onClick={() => this.props.setAudio(!(this.props.audioSetting))} className="Banner_Play">
+                             <button onClick={() => localStorage.setItem("isPlaying", !localStorage.getItem("isPlaying"))} className="Banner_Play">
                                 { (this.props.audioSetting)?
                                     <i className="bi bi-pause-circle-fill"></i>:
                                     <i className="bi bi-play-circle-fill"></i>
@@ -72,8 +72,7 @@ class Banner extends React.Component
 
 function mapStateToProps(state) {
     return { 
-      selectedAudio: state.selected_audio_reducer,
-      audioSetting: state.set_audio_reducer
+      selectedAudio: state.selected_audio_reducer
      };
 }
 

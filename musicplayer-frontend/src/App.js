@@ -8,6 +8,7 @@ import * as actions from './store/actions'
 
 
 import Routes from './routes/routes'
+import MediaPlayer from './components/MediaPlayer/mediaplayer'
 
 class App extends React.Component
 {
@@ -18,10 +19,7 @@ class App extends React.Component
         this.props.fetchUser()
         this.props.fetchPlaylist()
         //Inital Authentication Fetch
-        this.props.fetchUser();
-        this.props.fetchTracks();
-        this.props.fetchPlaylist();
-        localStorage.setItem('Coog-MusicPlayer-State', true)
+        localStorage.setItem("isPlaying", false)
     }
 
     
@@ -30,6 +28,7 @@ class App extends React.Component
     {
         return(<React.Fragment>
             <Routes></Routes>
+            <MediaPlayer/>
         </React.Fragment>)
     }
 }

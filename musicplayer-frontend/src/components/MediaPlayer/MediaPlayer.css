@@ -11,7 +11,6 @@
 }
 
 
-
 .mediaplayer_info
 {
     padding:0;
@@ -87,6 +86,69 @@
       font-size: 13px;
       font: Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
   }
+
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 20px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    top:-8em;
+    left:.2em;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+
+
+  .dropdown:hover .dropdown-content {display: block;}
+
+  .slider-wrapper {
+    display: inline-block;
+    width: 20px;
+    height: 150px;
+    padding: 0;
+  }
+
+
+.slider-wrapper input {
+    width: 150px;
+    height: 20px;
+    margin: 0;
+    transform-origin: 75px 75px;
+    transform: rotate(-90deg);
+    outline: none;
+
+  }
+
+
+input[type=range] {
+    
+    background-color: red;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+     -webkit-appearance: none;
+    background-color: rgb(0, 0, 0);
+    opacity: 0.5;
+    width: 10px;
+    height: 26px;
+}
+
+
+
 
   
 

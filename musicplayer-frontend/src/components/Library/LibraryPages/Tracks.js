@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import * as actions from '../../../store/actions'
 
 import "./Tracks.css"
+import axios from 'axios'
 
 class Tracks extends React.Component
 {
@@ -16,25 +17,42 @@ class Tracks extends React.Component
         super(props);
         this.state = {
             totalAudio: null,
-            totalDurationSeconds: 0
+            totalDurationSeconds: 0,
+            tracks: []
         }
     }
    
 
     componentDidMount()
     {  
+        
         try{
-            this.fetchTrack.then(() => {
-                
+            axios.get('/api/get/user/tracks')
+            .then(res=> {
+                this.setState({tracks: res.data})
+            }).then(() => {
                 this.props.fetch_track.map(data=>
-                    {
-                        this.setState({totalDurationSeconds:  this.state.totalDurationSeconds+data.duration})
-                    })
+                {
+                    this.setState({totalDurationSeconds:  this.state.totalDurationSeconds+data.duration})
+                })
             })
         }catch(err)
         {
             
         }  
+    }
+
+    removeSong(song)
+    {
+        let tempTracks = []
+        for(let i = 0; i < this.state.tracks.length; i++)
+        {
+            if(song != this.state.tracks[i])
+            {
+                tempTracks.push(this.state.tracks[i])
+            }
+        }
+        this.setState({tracks: tempTracks})
     }
    
     render()
@@ -42,7 +60,12 @@ class Tracks extends React.Component
         return(<React.Fragment>
                 <Banner totalAudio={(this.props.fetch_track)?this.props.fetch_track.length:0} totalDurationSeconds={this.state.totalDurationSeconds}></Banner>
                 <div className="col-12 ">
-                    <AudioTable fetch_track={this.props.fetch_track} ></AudioTable>
+                    <AudioTable fetch_track={this.state.tracks} 
+                                type={"Track"} 
+                                playlist_name={this.props.playlist_name} 
+                                playlist_id={this.props.playlist_id}
+                                removeSong={this.removeSong.bind(this)}>
+                    </AudioTable>
                 </div>
                 <div className="col-12 Track_Footer d-flex flex-column align-items-center">
                     <h3>
