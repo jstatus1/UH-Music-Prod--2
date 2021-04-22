@@ -152,6 +152,21 @@ class SimpleAudioContainer extends React.Component
         }
     }
 
+    renderPlayButton()
+    {
+        try{
+            
+            return((this.props.selectedAudio.song_id == this.props.song.song_id && 
+                JSON.parse(localStorage.getItem('isPlaying')))?
+                    <i class="bi bi-pause-circle-fill"></i>:
+                    <i class="bi bi-play-circle-fill"></i>)
+        }catch(err)
+        {
+            return(<i class="bi bi-play-circle-fill"></i>)
+        }
+    }
+
+
     displayLogic()
     {
         return(<>
@@ -165,10 +180,8 @@ class SimpleAudioContainer extends React.Component
                 
                 <div className="playbutton">
                     <a onClick={() => this.audioLogic()}>
-                        {(this.props.selectedAudio == this.props.song && this.props.audioSetting)?
-                            <i class="bi bi-pause-circle-fill"></i>:
-                            <i class="bi bi-play-circle-fill"></i>
-                        }
+                       
+                        {this.renderPlayButton()}
                     </a>
                 </div>
                 

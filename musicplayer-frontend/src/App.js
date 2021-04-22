@@ -15,7 +15,8 @@ class App extends React.Component
     //Initial State Initialization
     componentDidMount()
     {
-
+        this.props.fetchUser()
+        this.props.fetchPlaylist()
         //Inital Authentication Fetch
         this.props.fetchUser();
         this.props.fetchTracks();
