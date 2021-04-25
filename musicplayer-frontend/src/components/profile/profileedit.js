@@ -16,6 +16,9 @@ const ProfileEdit = ({auth}) => {
     const [last_name, setLastName] = useState(auth.last_name);
     const [email, setEmail] = useState(auth.email);
     const [about_me, setAboutMe] = useState(auth.about_me);
+    const [facebook, setFacebook] = useState(auth.socialmedia_fb);
+    const [instagram, setInstagram] = useState(auth.socilmedia_in);
+    const [twitter, setTwitter] = useState(auth.socialmedia_tw);
     const [edit_profile, setEditProfile] = useState(false);
     const [account_updated, setUpdated] = useState(false);
     const [query_status, setQueryStatus] = useState(0);
@@ -45,7 +48,10 @@ const ProfileEdit = ({auth}) => {
             first_name: first_name,
             last_name: last_name,
             email: email,
-            about_me: about_me
+            about_me: about_me,
+            facebook: facebook,
+            instagram: instagram,
+            twitter: twitter
         }
 
         console.log(queryInput)
@@ -165,6 +171,43 @@ const ProfileEdit = ({auth}) => {
                 <div className={edit_profile ? "display-off" : "display-on about-me-textbox"}>
                 <Form.Control type="text" readOnly plaintext defaultValue={about_me}/>
                 </div>
+                </Col>
+            </Row>
+            <Row>
+                <Col md="3"></Col>
+                <Col md="7">
+                    <t4 style={{"fontWeight":"bold"}}>Social Media</t4>
+                    <div style={{"marginTop":"20px"}}/>
+                </Col>
+            </Row>
+            <Row>
+                <Col md="3"></Col>
+                <Col md="1">
+                    <Row style={{"marginBottom":"2.5em"}}><t5 style={{"textAlign":"right"}}>Facebook</t5></Row>
+                    <Row style={{"marginBottom":"2.5em"}}><t5 style={{"textAlign":"right"}}>Instagram</t5></Row>
+                    <Row><t5 style={{"textAlign":"right"}}>Twitter</t5></Row>
+                    </Col>
+                <Col md="5">
+                    <div className={edit_profile ? "display-on" : "display-off"}>
+                        <Form.Control type="text" 
+                                    value={facebook}
+                                    onChange={(e) => setFacebook(e.target.value)}></Form.Control>
+                        <div style={{"marginTop":"20px"}}/>
+                        <Form.Control type="text" 
+                                    value={instagram}
+                                    onChange={(e) => setInstagram(e.target.value)}></Form.Control>
+                        <div style={{"marginTop":"20px"}}/>
+                        <Form.Control type="text" 
+                                    value={twitter}
+                                    onChange={(e) => setTwitter(e.target.value)}></Form.Control>
+                    </div>
+                    <div className={edit_profile ? "display-off" : "display-on"}>
+                        <a href={facebook}>{facebook}</a>
+                        <a href={instagram}>{instagram}</a>
+                        <a href={twitter}>{twitter}</a>
+
+
+                    </div>
                 </Col>
             </Row>
             <Row style={{"paddingTop":"30px"}}>

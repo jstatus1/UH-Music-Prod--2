@@ -82,7 +82,6 @@ const Reports_Songs = ({auth}) => {
             }})
             .then((res) => {
                 console.log('Song deleted!')
-                history.push('/');
                 setShowModal(true);
             })
     }

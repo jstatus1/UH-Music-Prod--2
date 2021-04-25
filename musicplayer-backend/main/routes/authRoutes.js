@@ -129,8 +129,13 @@ module.exports = app => {
       let last_name = req.body.queryInput.last_name 
       let email = req.body.queryInput.email 
       let about_me = req.body.queryInput.about_me 
+      let fb = req.body.queryInput.facebook
+      let inst = req.body.queryInput.instagram
+      let tw = req.body.queryInput.twitter
 
-      let test_value = [username, new_password, first_name, last_name, email, about_me, old_username ]
+
+
+      let test_value = [username, new_password, first_name, last_name, email, about_me, old_username, fb, inst, tw ]
       console.log(test_value)
       let value = []
 
@@ -138,9 +143,10 @@ module.exports = app => {
       let query = ``
 
       if (new_password !== null) {
-        value = [username, hashedNewPassword, first_name, last_name, email, about_me, old_username ]
+        value = [username, hashedNewPassword, first_name, last_name, email, about_me, old_username, fb, inst, tw  ]
         query = `UPDATE users 
-                 SET username = $1, password = $2, first_name = $3, last_name = $4, email = $5, about_me = $6
+                 SET username = $1, password = $2, first_name = $3, last_name = $4, email = $5, about_me = $6,
+                 socialmedia_fb = $8, socialmedia_in = $9, socialmedia_tw = $10
                  WHERE username = $7`
       }
       else {

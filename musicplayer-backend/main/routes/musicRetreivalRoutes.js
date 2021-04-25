@@ -109,20 +109,30 @@ module.exports = app => {
         })
     })
 
+    app.get('/api/get/songBysong_id', async(req, res) => {
+        await pool.query(`SELECT s.*, u.username FROM songs s left join users u 
+        ON s.user_id = u.uid where song_id=$1  limit 1`, [req.query.song_id])
+        .then((data)=> {
+            res.status(200).send(data.rows)
+        })
+        .catch((err) => {
+            console.log(err)
+            res.status(401).send('Failed To Grab Info Form Database')
+        })
+    })
+
 
     app.get('/api/get/playlistById', async(req, res) =>{
         var playlist_id = req.query.playlistId
         console.log(playlist_id)
         
-        await pool.query(`SELECT s.*, u.username as username
-        FROM playlist_songs p
-            Left JOIN songs s
-            ON  p.song_id = s.song_id
-            Left JOIN playlists 
-            ON  p.playlist_id = playlists.playlist_id
-            Left JOIN users u
-            ON s.user_id = u.uid
-        WHERE p.playlist_id = $1`, [playlist_id])
+        await pool.query(`SELECT *
+                        FROM playlist_songs p
+                            Left JOIN songs s
+                            ON  p.song_id = s.song_id
+                            Left JOIN playlists 
+                            ON  p.playlist_id = playlists.playlist_id
+                        WHERE p.playlist_id = $1`, [playlist_id])
                     .then((q_res) => {
                         console.log(q_res.rows)
                         res.send(q_res.rows)
@@ -268,23 +278,6 @@ module.exports = app => {
             }).catch(err => {
                 return res.status(401).send({message: "This Item Is Already Removed!!"})
             })
-    })
-
-
-    app.delete('/api/delete/songFromPlaylist', async(req, res)=> {
-        let playlist_id = req.query.playlist_id
-        let song_id= req.query.song_id
-
-        console.log([playlist_id, song_id])
-        await pool.query(`DELETE FROM playlist_songs
-        WHERE playlist_id=$1 and song_id=$2`, [playlist_id,song_id])
-        .then(
-            res.send(true)
-        )
-        .catch((err) => {
-            res.status(401).send("Error")
-        })
-        
     })
 
     
